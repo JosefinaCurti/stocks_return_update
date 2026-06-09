@@ -2,7 +2,7 @@
  
 An interactive visualization of cumulative price returns for 58 energy stocks over a rolling 2-year window — built in Python and published as a live web chart.
  
-🔗 **[View the live chart](https://josefinacurti.github.io/stocks_return_update/)**
+🔗 **[View the live chart](https://josefinacurti.github.io/energy_performance_tracker/)**
  
 ---
  
