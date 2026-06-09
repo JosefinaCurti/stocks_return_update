@@ -6,22 +6,25 @@ An interactive visualization of cumulative price returns for 58 energy stocks ov
  
 ---
  
-## What This Is
+# What This Is
  
-Energy is one of the most structurally interesting sectors to track right now: nuclear revival, hydrogen scale-up attempts, solar margin compression, and grid infrastructure buildout are all playing out simultaneously in public markets. This project pulls live price data for 58 publicly traded energy companies across six sub-sectors, calculates their cumulative return from 2 years ago to today, and plots them in a single interactive chart.
- 
-The result is a real-time view of which energy themes the market is rewarding — and which it isn't.
+Energy is one of the most structurally interesting sectors to track right now: nuclear revival, hydrogen scale-up attempts, solar margin compression, and grid infrastructure buildout are all playing out simultaneously in public markets. This project pulls live price data for 58 publicly traded energy companies across six sub-sectors, calculates their cumulative return from 2 years ago to today, and plots them in a fully interactive chart with multiple views and filters.
  
 ---
  
 ## The Chart
  
-The interactive Plotly chart (hosted via GitHub Pages) lets you:
+The interactive Plotly chart (hosted via GitHub Pages) includes four controls:
  
-- **Hover** over any line to see the company's full name and exact cumulative return on that date
-- **Toggle "Top 5 Only"** to isolate the five largest companies by market cap and reduce noise
-- **Click legend items** to show/hide individual tickers
-- **Zoom and pan** across the 2-year time range
+| Control | What it does |
+|---------|-------------|
+| **Individual View / Aggregated by Sector** | Toggle between per-stock lines and sector-averaged lines |
+| **Show All / Top 5 Only** | Filter to the 5 largest companies by market cap (Individual View only) |
+| **Company dropdown** | Isolate a single stock; sorted by highest cumulative return |
+| **Sector dropdown** | Filter to one sector — context-aware (works in both Individual and Aggregated views) |
+ 
+Hovering shows the full company name, sector, and exact cumulative return for that date. Each trace ends with a badge annotation showing the final period return.
+ 
 ---
  
 ## Stock Universe
@@ -37,19 +40,19 @@ The interactive Plotly chart (hosted via GitHub Pages) lets you:
 | **Storage & Grid** | TSLA, FLNC, STEM, EOSE, GWH, NRGV, GNRC, AYI, HUBB, PWR, VRT, EAT |
 | **Integrated Energy** | NEE, XOM, CVX, SHEL, TTE, BP, EQNR, IBE.MC, ENEL.MI |
  
-The universe was selected to span the full clean energy stack — from upstream fuel (uranium miners) to downstream infrastructure (grid equipment) — alongside traditional integrated majors as a benchmark reference.
- 
 ---
  
 ## How It Works
  
 The notebook (`energy_stocks_market_price.ipynb`) runs end-to-end in a single execution:
  
-1. **Fetches live data** via `yfinance` for all 58 tickers from 2 years ago to today
+1. **Fetches live data** via `yfinance` for all 58 tickers over a rolling 2-year window
 2. **Calculates cumulative return** for each stock: `(price_t / price_t0) - 1`, anchored to the first trading day in the window
-3. **Ranks by market cap** to identify the Top 5 for the filter toggle
-4. **Builds the interactive Plotly figure** with per-trace hover labels, end-of-line markers, and the Top 5 filter button
-5. **Exports to HTML** (`index.html`) — committed to the repo and served via GitHub Pages
+3. **Identifies Top 5** by sorting on market capitalization and taking the top 5 tickers
+4. **Aggregates by sector** by averaging cumulative returns across all stocks in each sector group, for the Aggregated View
+5. **Sorts traces by final return** — both the individual stock traces and sector traces are ordered highest-to-lowest by their last cumulative change value, so the best performers appear at the top of the legend
+6. **Builds the interactive Plotly figure** with dual trace layers (individual + sector), four filter controls, per-trace hover labels with sector context, and end-of-line badge annotations
+7. **Exports to HTML** (`cumulative_change_chart.html`) — committed to the repo and served via GitHub Pages
 ---
  
 ## What the Data Shows (as of June 2026)
@@ -78,7 +81,7 @@ pip install -r requirements.txt
 jupyter notebook energy_stocks_market_price.ipynb
 ```
  
-The final cell writes `index.html`. Commit and push to update the live GitHub Pages chart.
+The final cell writes `cumulative_change_chart.html`. Commit and push to update the live GitHub Pages chart.
  
 > **Note:** Data is fetched live from Yahoo Finance at runtime. Results reflect the 2-year window ending on today's date, so the chart updates automatically each time the notebook is re-executed and the output committed.
  
@@ -92,6 +95,10 @@ The final cell writes `index.html`. Commit and push to update the live GitHub Pa
 - **[pandas](https://pandas.pydata.org/)** — data wrangling
 - **GitHub Pages** — live chart hosting
 ---
+ 
+## License
+ 
+Apache-2.0
  
 ## License
  
