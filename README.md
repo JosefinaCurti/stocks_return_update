@@ -100,6 +100,4 @@ The final cell writes `cumulative_change_chart.html`. Commit and push to update 
  
 Apache-2.0
  
-## License
- 
-Apache-2.0
+
